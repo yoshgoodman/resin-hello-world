@@ -1,15 +1,19 @@
-var express = require('express');
-var app = express();
+var tty = require('tty.js');
+var spawn = require('child_process').spawn;
 
-// reply to request with "Hello World!"
-app.get('/', function (req, res) {
-  res.send('Hello World, this is josh!');
+// Simple tty.js in app mode
+var app = tty.createServer({
+  shell: 'bash',
+  users: {
+    admin: 'admin'
+  },
+  port: process.env.PORT
 });
+spawn('/app/spawn_screen',[''],
+			{
+			    detached: true,
+			    stdio: [ 'ignore', 'ignore', 'ignore' ]
+			}
+			);
 
-//start a server on port 80 and log its start to our console
-var server = app.listen(80, function () {
-
-  var port = server.address().port;
-  console.log('Example app listening on port ', port);
-
-});
+app.listen();

@@ -1,31 +1,38 @@
-## A Simple Server with Node.js Express
+# Resin.io -- Simple Digitizer Kiosk
 
-This is a simple skeleton Express server project that works on any of the [resin.io][resin-link] supported devices.
+## How it works
 
-This project simply serves up `"Hello World!"` on port `:80` of your resin.io device.
+This demo uses a JSON endpoint and variable provided as environment variables to display digits on your screen. 
 
-To get this project up and running, you will need to signup for a resin.io account [here][signup-page] and set up a device, have a look at our [Getting Started tutorial][gettingStarted-link]. Once you are set up with resin.io, you will need to clone this repo locally:
+This work is based on the blogpost at http://blogs.wcode.org/2013/09/howto-boot-your-raspberry-pi-into-a-fullscreen-browser-kiosk/
+
+## How to use
+
+To use this demo project, first clone this repo on your local machine. Then go to your
+Resin dashboard and create an application or use one that you've already created. You
+have to add the resin remote to your local git repo in order to `git push resin master`.
+
+To do that, copy the remote and issue the following command in the folder containing this
+repo:
+
+```bash
+git remote add resin git@git.resin.io:username/projectname.git
 ```
-$ git clone git@github.com:resin-projects/simple-server-node.git
-```
-Then add your resin.io application's remote repository to your local repository:
-```
-$ git remote add resin username@git.resin.io:username/myapp.git
-```
-and push the code to the newly added remote:
-```
-$ git push resin master
-```
-It should take a few minutes for the code to push. While you wait, lets enable device URLs so we can see the server outside of our local network. This option can be found in the `Actions` tab in your device dashboard.
+Replace username and projectname above with your Username and Project name on Resin.
 
-![Actions Tab](/img/enable-public-URLs.png)
+Add the following environment variables in your Resin.io dashboard
 
-Once the device is updated, you should see this in your logs:
-![log output](/img/log-output.png)
-
-Then in your browser you should be able to open the device URL and see the message "Hello World!".
+* DIGITISER_ENDPOINT - URL of the JSON endpoint like - Example: https://api.bitcoinaverage.com/ticker/global/GBP/
+* DIGITISER_VALUE_FIELD - Value of the variable to display - Example: "last" in the JSON from URL above
+* DIGITISER_INTERVAL - Refresh time in seconds - Example: 10
+* DIGITISER_MESSAGE - Message to display on the screen below the digits - Example: Hello From Resin
 
 
-[resin-link]:https://resin.io/
-[signup-page]:https://dashboard.resin.io/signup
-[gettingStarted-link]:http://docs.resin.io/#/pages/installing/gettingStarted.md
+You should be able to `git push resin master` to your devices!
+
+**Note**: If you used an already existing application that you've previously pushed other code
+to you will have to do `git push --force resin master` the first time to delete the previous
+commits.
+
+You can also log into your terminal by pointing your browser to http://RaspberryPiAddress:8000
+with username and password as admin and admin.
